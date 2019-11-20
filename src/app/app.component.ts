@@ -1,10 +1,23 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'my-app',
+    styles: [`
+      .app {
+        width: 1000px;
+        margin: auto;
+      }
+      .main {
+        background-color:white;
+      }
+    `],
+    template: `
+      <div class="app">
+        <nav-bar></nav-bar>
+        <div class="main">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    `,
 })
-export class AppComponent {
-  title = 'Plural-Sight-Angular-Best-Practices';
-}
+export class AppComponent  {  }
