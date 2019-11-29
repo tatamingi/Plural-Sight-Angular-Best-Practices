@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { UserRepositoryService } from '../core/user-repository.service';
 import { CatalogRepositoryService } from './catalog-repository.service';
+import { FilterClassesService } from './filter-classes.service';
 
 @Component({
   styleUrls: ['./catalog.component.css'],
@@ -14,6 +15,7 @@ export class CatalogComponent implements OnInit {
   constructor(
     private catalogRepository: CatalogRepositoryService,
     private userRepository: UserRepositoryService,
+    private filterClasses: FilterClassesService
   ) {
   }
 
@@ -33,7 +35,7 @@ export class CatalogComponent implements OnInit {
         (err) => {
           console.error(err);
           classToEnroll.processing = false;
-        }, //add a toast message or something
+        }, // add a toast message or something
         () => {
           classToEnroll.processing = false;
           classToEnroll.enrolled = true;
@@ -49,7 +51,7 @@ export class CatalogComponent implements OnInit {
         (err) => {
           console.error(err);
           classToDrop.processing = false;
-        }, //add a toast message or something
+        }, // add a toast message or something
         () => {
           classToDrop.processing = false;
           classToDrop.enrolled = false;
@@ -58,21 +60,6 @@ export class CatalogComponent implements OnInit {
   }
 
   applyFilter(filter) {
-    if (!filter) {
-      return this.visibleClasses = this.classes;
-    }
-
-    if (filter === 'GEN') {
-      return this.showGeneralCourses();
-    }
-
-    return this.visibleClasses = this.classes.filter(c => c.course.courseNumber.startsWith(filter));
-  }
-
-  showGeneralCourses() {
-    this.visibleClasses = this.classes.filter(c =>
-      !c.course.courseNumber.startsWith('CH') &&
-      !c.course.courseNumber.startsWith('PO') &&
-      !c.course.courseNumber.startsWith('SP'));
+    this.visibleClasses = this.filterClasses.filterClasses(filter, this.classes);
   }
 }
