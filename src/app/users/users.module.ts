@@ -1,25 +1,28 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 
 import { SignInComponent } from './sign-in.component';
 import { RegisterComponent } from './register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { RouterModule } from '@angular/router';
+import { UserRepositoryService } from '../core/user-repository.service';
 
 @NgModule({
   imports: [
-    SharedModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SharedModule,
+    RouterModule.forChild([
+      {path: 'register', component: RegisterComponent},
+      {path: 'sign-in', component: SignInComponent}
+    ])
   ],
-  exports: [
-    RegisterComponent,
-    SignInComponent
-  ],
+  exports: [ ],
   declarations: [
-    RegisterComponent,
-    SignInComponent
+    SignInComponent,
+    RegisterComponent
   ],
-  providers: []
+  providers: [ UserRepositoryService ]
 })
 export class UsersModule {
 }
